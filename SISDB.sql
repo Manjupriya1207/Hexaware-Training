@@ -1,100 +1,240 @@
-CREATE DATABASE SISDB;
-USE SISDB;
-CREATE TABLE Students (
-    student_id INT PRIMARY KEY AUTO_INCREMENT,
-    first_name VARCHAR(50),
-    last_name VARCHAR(50),
-    date_of_birth DATE,
-    email VARCHAR(100) UNIQUE
+create database Sis;
+use Sis;
+create table Students (
+student_id int primary key auto_increment,
+first_name varchar(20),
+last_name varchar(20),
+date_of_birth date,
+email varchar(20) unique,
+phone_number varchar(10)
 );
-CREATE TABLE Teachers (
-    teacher_id INT PRIMARY KEY AUTO_INCREMENT,
-    first_name VARCHAR(20),
-    last_name VARCHAR(20),
-    email VARCHAR(100) UNIQUE
+create table if not exists Teacher(
+teacher_id int Primary Key auto_increment,
+first_name varchar(20),
+last_name varchar(20),
+email varchar(20) unique
 );
-CREATE TABLE Courses (
-    course_id INT PRIMARY KEY AUTO_INCREMENT,
-    course_name VARCHAR(100),
-    credits INT,
-    teacher_id INT,
-    FOREIGN KEY (teacher_id) REFERENCES Teachers(teacher_id)
+create table Courses(
+course_id int Primary Key auto_increment,
+course_name varchar(30),
+credits int,
+teacher_id int,
+foreign key (teacher_id) references Teacher(teacher_id)
 );
-CREATE TABLE Enrollments (
-    enrollment_id INT PRIMARY KEY AUTO_INCREMENT,
-    student_id INT,
-    course_id INT,
-    enrollment_date DATE,
-    FOREIGN KEY (student_id) REFERENCES Students(student_id),
-    FOREIGN KEY (course_id) REFERENCES Courses(course_id)
+create table Enrollments(
+enrollment_id int Primary Key auto_increment,
+student_id int,
+course_id int,
+enrollment_date date,
+foreign key (student_id) references Students (student_id),
+foreign key (course_id) references Courses (course_id));
+create table Payments(
+payment_id int Primary Key auto_increment,
+student_id int,
+amount int,
+payment_date date,
+foreign key (student_id) references Students (student_id)
 );
-CREATE TABLE Payments (
-    payment_id INT PRIMARY KEY AUTO_INCREMENT,
-    student_id INT,
-    amount DECIMAL(10, 2),
-    payment_date DATE,
-    phone_number VARCHAR(15),
-    FOREIGN KEY (student_id) REFERENCES Students(student_id)
-);
-INSERT INTO Students (first_name, last_name, date_of_birth, email)
-VALUES
-('John', 'Doe', '2000-05-15', 'john.doe@example.com'),
-('Jane', 'Smith', '1999-03-20', 'jane.smith@example.com'),
-('Mark', 'Johnson', '1998-11-02', 'mark.johnson@example.com'),
-('Emily', 'Davis', '2001-07-12', 'emily.davis@example.com'),
-('Paul', 'Williams', '2000-01-19', 'paul.williams@example.com'),
-('Laura', 'Brown', '1997-09-27', 'laura.brown@example.com'),
-('Jake', 'Garcia', '1999-04-10', 'jake.garcia@example.com'),
-('Mia', 'Martinez', '2002-02-28', 'mia.martinez@example.com'),
-('Lucas', 'Anderson', '2001-06-15', 'lucas.anderson@example.com'),
-('Olivia', 'Taylor', '2000-08-05', 'olivia.taylor@example.com');
-INSERT INTO Teachers (first_name, last_name, email)
-VALUES
-('Alice', 'White', 'alice.white@example.com'),
-('Bob', 'Green', 'bob.green@example.com'),
-('Charles', 'Black', 'charles.black@example.com'),
-('Diana', 'Jones', 'diana.jones@example.com'),
-('Edward', 'Moore', 'edward.moore@example.com'),
-('Fiona', 'Clark', 'fiona.clark@example.com'),
-('George', 'Lee', 'george.lee@example.com'),
-('Hannah', 'Walker', 'hannah.walker@example.com'),
-('Ian', 'King', 'ian.king@example.com'),
-('Judy', 'Scott', 'judy.scott@example.com');
-INSERT INTO Courses (course_name, credits, teacher_id)
-VALUES
-('Math 101', 3, 1),
-('History 201', 4, 2),
-('Computer Science 101', 3, 3),
-('Physics 301', 4, 4),
-('Chemistry 202', 3, 5),
-('English Literature', 3, 6),
-('Biology 101', 4, 7),
-('Philosophy 101', 3, 8),
-('Economics 101', 4, 9),
-('Art History', 2, 10);
-INSERT INTO Enrollments (student_id, course_id, enrollment_date)
-VALUES
-(1, 1, '2023-09-01'),
-(2, 2, '2023-09-01'),
-(3, 3, '2023-09-02'),
-(4, 4, '2023-09-03'),
-(5, 5, '2023-09-04'),
-(6, 6, '2023-09-05'),
-(7, 7, '2023-09-06'),
-(8, 8, '2023-09-07'),
-(9, 9, '2023-09-08'),
-(10, 10, '2023-09-09');
-INSERT INTO Payments (student_id, amount, payment_date, phone_number)
-VALUES
-(1, 500.00, '2023-08-10', '555-1234'),
-(2, 700.00, '2023-08-12', '555-5678'),
-(3, 600.00, '2023-08-14', '555-9101'),
-(4, 550.00, '2023-08-16', '555-1213'),
-(5, 650.00, '2023-08-18', '555-1415'),
-(6, 750.00, '2023-08-20', '555-1617'),
-(7, 800.00, '2023-08-22', '555-1819'),
-(8, 900.00, '2023-08-24', '555-2021'),
-(9, 1000.00, '2023-08-26', '555-2223'),
-(10, 1100.00, '2023-08-28', '555-2425');
-show tables;
-select * from Payments;
+ALTER TABLE Students MODIFY phone_number VARCHAR(10);
+ALTER TABLE Students MODIFY email VARCHAR(50);
+insert into Students (first_name, last_name, date_of_birth, email, phone_number) values
+('John', 'Doe', '2000-05-15', 'john.doe@example.com', 9876543210),
+('Jane', 'Smith', '2001-07-22', 'jane.smith@example.com', 8765432109),
+('Michael', 'Brown', '1999-12-03', 'michael.brown@example.com', 7654321098),
+('Emily', 'Davis', '2000-01-14', 'emily.davis@example.com', 6543210987),
+('Daniel', 'Garcia', '1998-11-29', 'daniel.garcia@example.com', 5432109876),
+('Sophia', 'Martinez', '2002-03-25', 'sophia.martinez@example.com', 4321098765),
+('Matthew', 'Wilson', '2000-08-10', 'matthew.wilson@example.com', 3210987654),
+('Olivia', 'Anderson', '2001-02-17', 'olivia.anderson@example.com', 2109876543),
+('James', 'Taylor', '1999-04-09', 'james.taylor@example.com', 1098765432),
+('Ava', 'Thomas', '2002-06-18', 'ava.thomas@example.com', 9988776655);
+ALTER TABLE Teacher MODIFY email VARCHAR(50);
+insert into Teacher (first_name, last_name, email) values
+('Alice', 'Johnson', 'alice.johnson@example.com'),
+('Bob', 'Williams', 'bob.williams@example.com'),
+('Catherine', 'Miller', 'catherine.miller@example.com'),
+('David', 'Smith', 'david.smith@example.com'),
+('Emma', 'Brown', 'emma.brown@example.com'),
+('Frank', 'Davis', 'frank.davis@example.com'),
+('Grace', 'Wilson', 'grace.wilson@example.com'),
+('Henry', 'Garcia', 'henry.garcia@example.com'),
+('Ivy', 'Martinez', 'ivy.martinez@example.com'),
+('Jack', 'Anderson', 'jack.anderson@example.com');
+insert into Courses (course_name, credits, teacher_id) values
+('Mathematics', 3, 1),
+('Physics', 4, 2),
+('Chemistry', 3, 3),
+('Biology', 3, 4),
+('History', 2, 5),
+('Computer Science', 4, 6),
+('English', 3, 7),
+('Economics', 3, 8),
+('Psychology', 2, 9),
+('Political Science', 3, 10);
+Insert into Enrollments (student_id, course_id, enrollment_date) VALUES
+(11, 1, '2024-01-15'),
+(12, 2, '2024-01-16'),
+(13, 3, '2024-01-17'),
+(14, 4, '2024-01-18'),
+(15, 5, '2024-01-19'),
+(16, 6, '2024-01-20'),
+(17, 7, '2024-01-21'),
+(18, 8, '2024-01-22'),
+(19, 9, '2024-01-23'),
+(20, 10, '2024-01-24');
+Insert into Payments (student_id, amount, payment_date) VALUES
+(11, 1000, '2024-01-01'),
+(12, 1500, '2024-01-02'),
+(13, 2000, '2024-01-03'),
+(14, 2500, '2024-01-04'),
+(15, 3000, '2024-01-05'),
+(16, 3500, '2024-01-06'),
+(17, 4000, '2024-01-07'),
+(18, 4500, '2024-01-08'),
+(19, 5000, '2024-01-09'),
+(20, 5500, '2024-01-10');
+-- 1. Write an SQL query to insert a new student into the "Students" table with the following details:
+Insert into Students (first_name, last_name, date_of_birth, email, phone_number) VALUES
+('Jona', 'Doe', '2000-05-15', 'jona.doe@example.com', '9876543210'),
+('sam', 'Smith', '2001-07-22', 'sam.smith@example.com', '8765432109');
+Select * From Students;
+Insert into Courses (course_name, credits, teacher_id) VALUES
+('dbms', 4, 11),
+('cn', 3, 12),
+('pe', 3, 13),
+('cs', 4, 14);
+Select * From Courses;
+insert into Teacher (first_name, last_name, email) values
+('Alra', 'Johnson', 'alra.johnson@example.com'),
+('Bary', 'Williams', 'bary.williams@example.com'),
+('Cary', 'Miller', 'cary.miller@example.com'),
+('Dav', 'Smith', 'dav.smith@example.com');
+
+-- 2. Write an SQL query to enroll a student in a course. Choose an existing student and course and
+-- insert a record into the "Enrollments" table with the enrollment date.
+
+insert into Enrollments (student_id, course_id, enrollment_date) VALUES
+(23, 17, '2024-01-23'),
+(24, 18, '2024-01-23');
+
+-- 3. Update the email address of a specific teacher in the "Teacher" table. Choose any teacher and
+-- modify their email address
+Select * From Teacher;
+update Teacher
+set email="bobi.williams@example.com"
+where teacher_id=2;
+Update Teacher
+Set email = 'alicee.johnson@example.com'
+Where teacher_id = 1;
+-- 4.Write an SQL query to delete a specific enrollment record from the "Enrollments" table. Select
+-- an enrollment record based on the student and course.
+delete from Enrollments
+Where student_id = 1 and course_id = 1;
+-- 5.Update the "Courses" table to assign a specific teacher to a course. Choose any course and
+-- teacher from the respective tables
+Update Courses
+set teacher_id = 2
+where course_id = 1;
+-- 6.Delete a specific student from the "Students" table and remove all their enrollment records
+-- from the "Enrollments" table. Be sure to maintain referential integrity.
+delete from Enrollments
+Where student_id = 1; 
+delete from Students
+Where student_id = 1; 
+-- 7.Update the payment amount for a specific payment record in the "Payments" table. Choose any
+-- payment record and modify the payment amount.
+UPDATE Payments
+SET amount = 1200
+Where payment_id = 1;
+
+-- 1.Write an SQL query to calculate the total payments made by a specific student. You will need to
+-- join the "Payments" table with the "Students" table based on the student's ID.
+Select * From Students;
+Select * From Payments;
+select s.student_id,s.first_name, sum(P.amount) as total_payments
+from Students s 
+join Payments p
+on s.student_id=p.student_id 
+where s.student_id = p.student_id 
+group by  s.student_id,s.first_name ;
+
+-- 2. Write an SQL query to retrieve a list of courses along with the count of students enrolled in each
+-- course. Use a JOIN operation between the "Courses" table and the "Enrollments" table.
+Select * From Courses;
+Select * From Enrollments;
+select c.course_id,c.course_name,count(e.enrollment_id)as students_enrolled
+from Courses c
+join Enrollments e
+on  c.course_id= e.course_id
+group by c.course_id,c.course_name;
+
+/* 3.Write an SQL query to find the names of students who have not enrolled in any course. Use a
+LEFT JOIN between the "Students" table and the "Enrollments" table to identify students
+without enrollments. */ Select * From Students;
+select s.first_name,s.student_id, count(e.enrollment_id) 
+from Students s 
+left join Enrollments e
+on s.student_id=e.student_id
+group by s.first_name,s.student_id
+having count(e.enrollment_id)=0;
+
+/*4. Write an SQL query to retrieve the first name, last name of students, and the names of the
+courses they are enrolled in. Use JOIN operations between the "Students" table and the
+"Enrollments" and "Courses" tables.*/
+select s.first_name,s.last_name,c.course_name
+from Students s 
+join Enrollments e
+on s.student_id=e.student_id
+join Courses c 
+on e.course_id=c.course_id;
+
+/* 5. Create a query to list the names of teachers and the courses they are assigned to. Join the
+"Teacher" table with the "Courses" table.*/select * from Teacher;
+select t.first_name, t.last_name,c.course_id from Teacher t
+join Courses c 
+on t.teacher_id=c.teacher_id;
+
+/*6. Retrieve a list of students and their enrollment dates for a specific course. You'll need to join the
+"Students" table with the "Enrollments" and "Courses" tables.*/select * from Enrollments;
+select s.student_id,s.first_name,s.last_name,e.enrollment_date,c.course_name from Students s 
+join Enrollments e 
+on s.student_id=e.student_id
+join Courses c 
+on e.course_id=c.course_id
+WHERE c.course_name = 'Mathematics';
+
+/*7. Find the names of students who have not made any payments. Use a LEFT JOIN between the
+"Students" table and the "Payments" table and filter for students with NULL payment records.*/
+select s.first_name,s.last_name,p.payment_id from Students s 
+left join Payments p 
+on s.student_id=p.student_id
+where p.payment_id is NULL;
+
+/*8. Write a query to identify courses that have no enrollments. You'll need to use a LEFT JOIN
+between the "Courses" table and the "Enrollments" table and filter for courses with NULL enrollment records*/
+select c.course_name from Courses c 
+left join Enrollments e 
+on c.course_id=e.course_id
+where enrollment_id is null;
+
+/*9. Identify students who are enrolled in more than one course. Use a self-join on the "Enrollments"
+table to find students with multiple enrollment records.*/
+select s.first_name,s.last_name from Enrollments e1 
+join Enrollments e2
+on e1.enrollment_id=e2.enrollment_id
+and e1.enrollment_id != e2.enrollment_id
+join Students s 
+on e1.student_id = s.student_id
+group by e1.student_id, s.first_name, s.last_name;
+
+/*10. Find teachers who are not assigned to any courses. Use a LEFT JOIN between the "Teacher"
+table and the "Courses" table and filter for teachers with NULL course assignments*/select * from Teacher;
+select t.first_name,t.last_name from Teacher t
+left join Courses c 
+on t.teacher_id=c.teacher_id
+where c.course_id is null;
+
+
+
+
+

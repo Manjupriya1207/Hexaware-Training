@@ -1,0 +1,33 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid green;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+}
+
+.controls {
+    margin-bottom: 20px;
+}
+
+.controls input {
+    margin-right: 10px;
+    padding: 5px;
+}
+
+.controls button {
+    padding: 5px 10px;
+    margin-right: 10px;
+}
